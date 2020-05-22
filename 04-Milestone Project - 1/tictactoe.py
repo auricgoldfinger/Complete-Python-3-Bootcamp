@@ -2,7 +2,8 @@ import math
 from copy import deepcopy
 
 board = [['' for j in range(0,3)] for i in range(0,3)]
-debug = True
+debug = False
+player = 'X'
 
 def print_debug(s) :
     if (debug) : print(s)
@@ -10,21 +11,18 @@ def print_debug(s) :
 def print_help():
     global board
     board_backup = deepcopy(board)
-
-    print("\n\tTo place your move on the board, enter the number corresponding to the following grid:")
+    clear_board()
+    print("\n\tTo place your move on the board, enter the number corresponding to the following grid:\n")
     for i in range(0,9):
         place_on_board(f"{i+1}",i)
     print_board()
+    clear_board()
     board = deepcopy(board_backup)
+    print_board()
     
 
 def print_board() :
     global board
-    title = "Current board\n"
-    for c in title:
-        title += "="
-    
-    print(f"\n{title}\n")
 
     for i, row in enumerate(board):
         print(f"\t{row[0]:^3}|{row[1]:^3}|{row[2]:^3}")
@@ -38,7 +36,12 @@ def place_on_board(char,place):
     row = int(math.floor(place / 3))
     col = place % 3
     print_debug(f"row: {row}, col: {col}")
-    board[row][col] = char
+    if (board[row][col] == '' or char == ''):
+        board[row][col] = char
+        return True
+    else:
+        print("That spot is already taken")
+        return False
 
 def clear_board():
     global board
@@ -46,10 +49,10 @@ def clear_board():
         place_on_board('',i)
 
 def read_user_input() :
-    global board
+    global board, player
     ask_for_input = True
     while ask_for_input :
-        yourinput = input("Feed me a number from 1 to 9: ")
+        yourinput = input(f"Player {player}, feed me a number from 1 to 9: ")
         if yourinput == 'q':
             print("Thank you for playing!")
             exit()
@@ -66,7 +69,13 @@ def read_user_input() :
             print("Number out of range.")
             continue
 
-        place_on_board(yourinput, yournumber)
-        print_board()
+        if place_on_board(player, yournumber):
+            title = "Current board\n"
+            for c in title:
+                title += "="
+            
+            print(f"\n{title}\n")
+            print_board()
+            player = 'O' if player == 'X' else 'X'
 
 read_user_input()
