@@ -1,4 +1,5 @@
 import math
+from copy import deepcopy
 
 board = [['' for j in range(0,3)] for i in range(0,3)]
 debug = True
@@ -7,10 +8,14 @@ def print_debug(s) :
     if (debug) : print(s)
 
 def print_help():
+    global board
+    board_backup = deepcopy(board)
+
     print("\n\tTo place your move on the board, enter the number corresponding to the following grid:")
     for i in range(0,9):
         place_on_board(f"{i+1}",i)
     print_board()
+    board = deepcopy(board_backup)
     
 
 def print_board() :
@@ -34,6 +39,11 @@ def place_on_board(char,place):
     col = place % 3
     print_debug(f"row: {row}, col: {col}")
     board[row][col] = char
+
+def clear_board():
+    global board
+    for i in range(0,9):
+        place_on_board('',i)
 
 def read_user_input() :
     global board
