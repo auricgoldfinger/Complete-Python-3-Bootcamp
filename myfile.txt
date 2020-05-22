@@ -1,0 +1,6 @@
+Hello, this is a text file
+This is the second line
+And this is the third
+# This is Notebook magic
+another line
+another line
