@@ -21,6 +21,13 @@ def print_board() :
 
     print('')
 
+def place_on_board(char,place):
+    global board
+    row = int(math.floor(place / 3))
+    col = place % 3
+    print_debug(f"row: {row}, col: {col}")
+    board[row][col] = char
+
 def read_user_input() :
     global board
     ask_for_input = True
@@ -39,10 +46,7 @@ def read_user_input() :
             print("Number out of range.")
             continue
 
-        row = int(math.floor(yournumber / 3))
-        col = yournumber % 3
-        print_debug(f"row: {row}, col: {col}")
-        board[row][col] = yourinput
+        place_on_board(yourinput, yournumber)
         print_board()
 
 read_user_input()
