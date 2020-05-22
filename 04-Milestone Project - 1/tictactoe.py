@@ -6,6 +6,13 @@ debug = True
 def print_debug(s) :
     if (debug) : print(s)
 
+def print_help():
+    print("\n\tTo place your move on the board, enter the number corresponding to the following grid:")
+    for i in range(0,9):
+        place_on_board(f"{i+1}",i)
+    print_board()
+    
+
 def print_board() :
     global board
     title = "Current board\n"
@@ -36,6 +43,9 @@ def read_user_input() :
         if yourinput == 'q':
             print("Thank you for playing!")
             exit()
+        elif yourinput == 'h':
+            print_help()
+            continue
         elif (not yourinput.isdigit()) :
             print("Oh come on.")
             continue
