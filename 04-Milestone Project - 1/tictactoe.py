@@ -83,7 +83,7 @@ def read_user_input() :
     global board, player
     ask_for_input = True
     while ask_for_input :
-        yourinput = input(f"Player {player}, feed me a number from 1 to 9: ")
+        yourinput = input(f"Player {player}, feed me a number from 1 to 9 ([h]elp, [q]uit): ")
         if yourinput == 'q':
             print("Thank you for playing!")
             exit()
@@ -111,6 +111,6 @@ def read_user_input() :
                 print(f"We have a winner! Player {player} wins this round!")
                 return
 
-            player = 'O' if player == 'X' else 'X'
+                player = 'O' if player == 'X' else 'X'
 
 read_user_input()
