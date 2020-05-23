@@ -54,16 +54,23 @@ def check_board(place):
     row, col = calculate_place(place)
     
     # check column
-    print_debug(f"{board[0][col]} == {board[1][col]} == {board[2][col]}?")
+    print_debug(f"Check column {col+1}: {board[0][col]} == {board[1][col]} == {board[2][col]}?")
     if (board[0][col] == board[1][col] == board[2][col]): return True
 
     # check row
-    print_debug(f"{board[row][0]} == {board[row][1]} == {board[row][2]}?")
+    print_debug(f"Check row    {row+1} : {board[row][0]} == {board[row][1]} == {board[row][2]}?")
     if (board[row][0] == board[row][1] == board[row][2]): return True
 
     # check diagonal
+    if (row == col):
+        print_debug(f"Check diagonal")
+        if (board[0][0] == board[1][1] == board[2][2]): return True
 
     # check anti-diagonal
+    if (row + col == 3-1):
+        print_debug(f"Check anti-diagonal")
+        if (board[0][2] == board[1][1] == board[2][0]): return True
+
     
     return False
 
