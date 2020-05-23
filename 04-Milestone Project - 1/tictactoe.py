@@ -31,10 +31,15 @@ def print_board() :
 
     print('')
 
-def place_on_board(char,place):
-    global board
+def calculate_place(place):
     row = int(math.floor(place / 3))
     col = place % 3
+    return (row,col)
+
+def place_on_board(char,place):
+    global board
+    row, col = calculate_place(place)
+
     print_debug(f"row: {row}, col: {col}")
     if (board[row][col] == '' or char == ''):
         board[row][col] = char
@@ -42,6 +47,25 @@ def place_on_board(char,place):
     else:
         print("That spot is already taken")
         return False
+
+def check_board(place):
+    '''Check whether there's a win'''
+    global board
+    row, col = calculate_place(place)
+    
+    # check column
+    print_debug(f"{board[0][col]} == {board[1][col]} == {board[2][col]}?")
+    if (board[0][col] == board[1][col] == board[2][col]): return True
+
+    # check row
+    print_debug(f"{board[row][0]} == {board[row][1]} == {board[row][2]}?")
+    if (board[row][0] == board[row][1] == board[row][2]): return True
+
+    # check diagonal
+
+    # check anti-diagonal
+    
+    return False
 
 def clear_board():
     global board
@@ -63,19 +87,23 @@ def read_user_input() :
             print("Oh come on.")
             continue
 
-        yournumber = int(yourinput)-1
+        place = int(yourinput)-1
 
-        if yournumber > 8 or yournumber < 0:
+        if place > 8 or place < 0:
             print("Number out of range.")
             continue
 
-        if place_on_board(player, yournumber):
+        if place_on_board(player, place):
             title = "Current board\n"
             for c in title:
                 title += "="
             
             print(f"\n{title}\n")
             print_board()
+            if check_board(place):
+                print(f"We have a winner! Player {player} wins this round!")
+                return
+
             player = 'O' if player == 'X' else 'X'
 
 read_user_input()
