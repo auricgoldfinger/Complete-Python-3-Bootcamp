@@ -124,3 +124,4 @@ def read_user_input() :
                 return
 
 read_user_input()
+print("")
