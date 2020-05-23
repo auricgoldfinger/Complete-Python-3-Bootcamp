@@ -79,6 +79,13 @@ def clear_board():
     for i in range(0,9):
         place_on_board('',i)
 
+def check_empty_spot():
+    global board
+    for row in board:
+        for cell in row:
+            if cell == '': return True
+    else: return False
+
 def read_user_input() :
     global board, player
     ask_for_input = True
@@ -110,7 +117,10 @@ def read_user_input() :
             if check_board(place):
                 print(f"We have a winner! Player {player} wins this round!")
                 return
-
+            elif check_empty_spot():
                 player = 'O' if player == 'X' else 'X'
+            else:
+                print("It's a tie!")
+                return
 
 read_user_input()
