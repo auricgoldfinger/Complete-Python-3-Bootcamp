@@ -8,11 +8,13 @@ debug = False
 player = 'X'
 
 def print_debug(s) :
+    ''' Prints the given text if debug is enabled '''
     if (debug) : print(s)
 
 clear_output = (lambda: system('cls')) if platform.startswith("win") else (lambda: system('clear'))
 
 def print_help():
+    ''' Print how you can enter your input '''
     clear_output()
     global board
     board_backup = deepcopy(board)
@@ -27,6 +29,7 @@ def print_help():
     
 
 def print_board() :
+    '''  Print the current board '''
     global board
 
     for i, row in enumerate(board):
@@ -37,6 +40,11 @@ def print_board() :
     print('')
 
 def calculate_place(place):
+    ''' 
+    Calculate the place of the given number on the board
+
+    OUTPUT = (row, col)
+    '''
     row = int(math.floor(place / 3))
     col = place % 3
     return (row,col)
@@ -54,7 +62,11 @@ def place_on_board(char,place):
         return False
 
 def check_board(place):
-    '''Check whether there's a win'''
+    '''
+    Check whether there's a win
+    
+    OUTPUT = True if there's a win based on the current place
+    '''
     global board
     row, col = calculate_place(place)
     
@@ -80,17 +92,27 @@ def check_board(place):
     return False
 
 def clear_board():
+    ''' Remove all entries from the board '''
+
     global board
     for i in range(0,9):
         place_on_board('',i)
 
 def check_empty_spot():
+    '''
+    Check if there's still an empty spot on the board
+
+    OUTPUT = True if there are still empty spots left
+    '''
+
     global board
     for row in board:
         if '' in row: return True
     else: return False
 
 def read_user_input() :
+    ''' Keep reading for user input until the user enters 'q' '''
+    
     global board, player
     ask_for_input = True
     while ask_for_input :
