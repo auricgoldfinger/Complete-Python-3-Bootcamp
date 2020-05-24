@@ -22,7 +22,8 @@ def print_help(board):
         place_on_board(board, f"{i+1}",i)
     print_board(board)
     clear_board(board)
-    board = deepcopy(board_backup)
+    board.clear()
+    board.extend(board_backup)
     print_board(board)
     
 
@@ -131,43 +132,43 @@ def read_user_input() :
 
     players = read_player_preferences(2)
 
-    player = players[0] if randint(0,1) == 1 else players[1]
-    print(f"\n\n\t{player['name']} will start this game.\n\n")
+        player = players[0] if randint(0,1) == 1 else players[1]
+        print(f"\n\n\t{player['name']} will start this game.\n\n")
 
     ask_for_input = True
-    while ask_for_input :
-        yourinput = input(f"{player['name']}, feed me a number from 1 to 9 ([h]elp, [q]uit): ")
-        if yourinput == 'q':
+        while ask_for_input :
+            yourinput = input(f"{player['name']}, feed me a number from 1 to 9 ([h]elp, [q]uit): ")
+            if yourinput == 'q':
             print("Thank you for playing!")
             exit()
-        elif yourinput == 'h':
-            print_help(board)
-            continue
-        elif (not yourinput.isdigit()) :
-            print("Oh come on.")
-            continue
+            elif yourinput == 'h':
+                print_help(board)
+                continue
+            elif (not yourinput.isdigit()) :
+                print("Oh come on.")
+                continue
 
-        place = int(yourinput)-1
+            place = int(yourinput)-1
 
-        if place > 8 or place < 0:
-            print("Number out of range.")
-            continue
+            if place > 8 or place < 0:
+                print("Number out of range.")
+                continue
 
-        if place_on_board(board, player['marker'], place):
-            clear_output()
-            title = "Current board\n"
-            for c in title:
-                title += "="
-            
-            print(f"\n{title}\n")
-            print_board(board)
-            if check_board(board, place):
-                print(f"We have a winner! {player['name']} wins this round!")
+            if place_on_board(board, player['marker'], place):
+                clear_output()
+                title = "Current board\n"
+                for c in title:
+                    title += "="
+                
+                print(f"\n{title}\n")
+                print_board(board)
+                if check_board(board, place):
+                    print(f"We have a winner! {player['name']} wins this round!")
                 return
-            elif check_empty_spot(board):
-                player = players[1] if player == players[0] else players[0] 
-            else:
-                print("It's a tie!")
+                elif check_empty_spot(board):
+                    player = players[1] if player == players[0] else players[0] 
+                else:
+                    print("It's a tie!")
                 return
 
 read_user_input()
