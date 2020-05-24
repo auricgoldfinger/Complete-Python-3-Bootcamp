@@ -2,6 +2,7 @@ import math
 from os import system
 from sys import platform
 from copy import deepcopy
+from random import randint
 
 debug = False
 
@@ -102,17 +103,40 @@ def check_empty_spot(board):
         if '' in row: return True
     else: return False
 
+def read_player_preferences(nrplayers):
+    player_list = []
+    for i in range(0,nrplayers):
+        player_name = input(f"\nPlayer {i+1}, what's your name? ")
+        player_marker = input(f"Hi, {player_name}, with which marker will you play? ")
 
+        marker_taken = True
+        while marker_taken:
+            for otherplayer in player_list:
+                if otherplayer['marker'] == player_marker:
+                    player_marker = input(f"{otherplayer['name']} is already playing with {otherplayer['marker']}. Choose another one: ")
+                    break
+            else:
+                marker_taken = False
+
+        print(f"Thank you, {player_name}, you'll be playing with {player_marker}")
+        player_list.append({'number': i+1, 'name': player_name, 'marker': player_marker})
+
+    return player_list
 
 def read_user_input() :
     ''' Keep reading for user input until the user enters 'q' '''
 
+    clear_output()
     board = [['' for j in range(0,3)] for i in range(0,3)]
-    player = 'X'
+
+    players = read_player_preferences(2)
+
+    player = players[0] if randint(0,1) == 1 else players[1]
+    print(f"\n\n\t{player['name']} will start this game.\n\n")
 
     ask_for_input = True
     while ask_for_input :
-        yourinput = input(f"Player {player}, feed me a number from 1 to 9 ([h]elp, [q]uit): ")
+        yourinput = input(f"{player['name']}, feed me a number from 1 to 9 ([h]elp, [q]uit): ")
         if yourinput == 'q':
             print("Thank you for playing!")
             exit()
@@ -129,7 +153,7 @@ def read_user_input() :
             print("Number out of range.")
             continue
 
-        if place_on_board(board, player, place):
+        if place_on_board(board, player['marker'], place):
             clear_output()
             title = "Current board\n"
             for c in title:
@@ -138,10 +162,10 @@ def read_user_input() :
             print(f"\n{title}\n")
             print_board(board)
             if check_board(board, place):
-                print(f"We have a winner! Player {player} wins this round!")
+                print(f"We have a winner! {player['name']} wins this round!")
                 return
             elif check_empty_spot(board):
-                player = 'O' if player == 'X' else 'X'
+                player = players[1] if player == players[0] else players[0] 
             else:
                 print("It's a tie!")
                 return
