@@ -3,9 +3,7 @@ from os import system
 from sys import platform
 from copy import deepcopy
 
-board = [['' for j in range(0,3)] for i in range(0,3)]
 debug = False
-player = 'X'
 
 def print_debug(s) :
     ''' Prints the given text if debug is enabled '''
@@ -13,24 +11,22 @@ def print_debug(s) :
 
 clear_output = (lambda: system('cls')) if platform.startswith("win") else (lambda: system('clear'))
 
-def print_help():
+def print_help(board):
     ''' Print how you can enter your input '''
     clear_output()
-    global board
     board_backup = deepcopy(board)
-    clear_board()
+    clear_board(board)
     print("\nTo place your move on the board, enter the number corresponding to the following grid:\n")
     for i in range(0,9):
-        place_on_board(f"{i+1}",i)
-    print_board()
-    clear_board()
+        place_on_board(board, f"{i+1}",i)
+    print_board(board)
+    clear_board(board)
     board = deepcopy(board_backup)
-    print_board()
+    print_board(board)
     
 
-def print_board() :
+def print_board(board) :
     '''  Print the current board '''
-    global board
 
     for i, row in enumerate(board):
         print(f"\t{row[0]:^3}|{row[1]:^3}|{row[2]:^3}")
@@ -49,8 +45,7 @@ def calculate_place(place):
     col = place % 3
     return (row,col)
 
-def place_on_board(char,place):
-    global board
+def place_on_board(board, char,place):
     row, col = calculate_place(place)
 
     print_debug(f"row: {row}, col: {col}")
@@ -61,13 +56,12 @@ def place_on_board(char,place):
         print("That spot is already taken")
         return False
 
-def check_board(place):
+def check_board(board, place):
     '''
     Check whether there's a win
     
     OUTPUT = True if there's a win based on the current place
     '''
-    global board
     row, col = calculate_place(place)
     
     # check column
@@ -91,29 +85,31 @@ def check_board(place):
     
     return False
 
-def clear_board():
+def clear_board(board):
     ''' Remove all entries from the board '''
 
-    global board
     for i in range(0,9):
-        place_on_board('',i)
+        place_on_board(board, '',i)
 
-def check_empty_spot():
+def check_empty_spot(board):
     '''
     Check if there's still an empty spot on the board
 
     OUTPUT = True if there are still empty spots left
     '''
 
-    global board
     for row in board:
         if '' in row: return True
     else: return False
 
+
+
 def read_user_input() :
     ''' Keep reading for user input until the user enters 'q' '''
-    
-    global board, player
+
+    board = [['' for j in range(0,3)] for i in range(0,3)]
+    player = 'X'
+
     ask_for_input = True
     while ask_for_input :
         yourinput = input(f"Player {player}, feed me a number from 1 to 9 ([h]elp, [q]uit): ")
@@ -121,7 +117,7 @@ def read_user_input() :
             print("Thank you for playing!")
             exit()
         elif yourinput == 'h':
-            print_help()
+            print_help(board)
             continue
         elif (not yourinput.isdigit()) :
             print("Oh come on.")
@@ -133,18 +129,18 @@ def read_user_input() :
             print("Number out of range.")
             continue
 
-        if place_on_board(player, place):
+        if place_on_board(board, player, place):
             clear_output()
             title = "Current board\n"
             for c in title:
                 title += "="
             
             print(f"\n{title}\n")
-            print_board()
-            if check_board(place):
+            print_board(board)
+            if check_board(board, place):
                 print(f"We have a winner! Player {player} wins this round!")
                 return
-            elif check_empty_spot():
+            elif check_empty_spot(board):
                 player = 'O' if player == 'X' else 'X'
             else:
                 print("It's a tie!")
