@@ -82,8 +82,7 @@ def clear_board():
 def check_empty_spot():
     global board
     for row in board:
-        for cell in row:
-            if cell == '': return True
+        if '' in row: return True
     else: return False
 
 def read_user_input() :
