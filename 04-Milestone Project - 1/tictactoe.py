@@ -13,10 +13,11 @@ def print_debug(s) :
 clear_output = (lambda: system('cls')) if platform.startswith("win") else (lambda: system('clear'))
 
 def print_help():
+    clear_output()
     global board
     board_backup = deepcopy(board)
     clear_board()
-    print("\n\tTo place your move on the board, enter the number corresponding to the following grid:\n")
+    print("\nTo place your move on the board, enter the number corresponding to the following grid:\n")
     for i in range(0,9):
         place_on_board(f"{i+1}",i)
     print_board()
