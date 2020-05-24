@@ -132,15 +132,19 @@ def read_user_input() :
 
     players = read_player_preferences(2)
 
+    ask_for_input = True
+    game_on = True
+    while game_on:
+        clear_output()
+        clear_board(board)
         player = players[0] if randint(0,1) == 1 else players[1]
         print(f"\n\n\t{player['name']} will start this game.\n\n")
 
-    ask_for_input = True
         while ask_for_input :
             yourinput = input(f"{player['name']}, feed me a number from 1 to 9 ([h]elp, [q]uit): ")
             if yourinput == 'q':
-            print("Thank you for playing!")
-            exit()
+                game_on = False
+                break
             elif yourinput == 'h':
                 print_help(board)
                 continue
@@ -164,12 +168,14 @@ def read_user_input() :
                 print_board(board)
                 if check_board(board, place):
                     print(f"We have a winner! {player['name']} wins this round!")
-                return
+                    break
                 elif check_empty_spot(board):
                     player = players[1] if player == players[0] else players[0] 
                 else:
                     print("It's a tie!")
-                return
+                    break
+        game_on = input("\nWant to play again? [y/N] ").lower() == 'y'
 
 read_user_input()
-print("")
+clear_output()
+print("\n\tThank you for playing!\n")
