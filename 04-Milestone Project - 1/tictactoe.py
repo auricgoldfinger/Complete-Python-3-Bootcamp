@@ -1,4 +1,6 @@
 import math
+from os import system
+from sys import platform
 from copy import deepcopy
 
 board = [['' for j in range(0,3)] for i in range(0,3)]
@@ -7,6 +9,8 @@ player = 'X'
 
 def print_debug(s) :
     if (debug) : print(s)
+
+clear_output = (lambda: system('cls')) if platform.startswith("win") else (lambda: system('clear'))
 
 def print_help():
     global board
@@ -107,6 +111,7 @@ def read_user_input() :
             continue
 
         if place_on_board(player, place):
+            clear_output()
             title = "Current board\n"
             for c in title:
                 title += "="
