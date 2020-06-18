@@ -1,6 +1,7 @@
 from game.card import Card
 from game.rank import Rank
 from game.suit import Suit
+from random import shuffle
 
 class Deck:
 
@@ -18,3 +19,12 @@ class Deck:
     
     def __len__(self):
         return len(self.cards)
+
+    def __getitem__(self, i):
+        return self.cards[i]
+
+    def shuffle(self):
+        shuffle(self.cards)
+        
+    def deal(self):
+        return self.cards.pop()
