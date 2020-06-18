@@ -7,7 +7,7 @@ class Rank(Enum):
     rank = Rank.ACE\n
     print (rank.value)
     '''
-
+    ACE = auto()
     TWO = auto()
     THREE = auto()
     FOUR = auto()
@@ -20,7 +20,6 @@ class Rank(Enum):
     JACK = auto()
     QUEEN = auto()
     KING = auto()
-    ACE = auto()
 
     def __str__(self):
         return self.name
