@@ -1,5 +1,5 @@
 
-from enum import Enum
+from enum import Enum, auto
 class Rank(Enum):
     '''
     Enum class\n
@@ -7,16 +7,23 @@ class Rank(Enum):
     rank = Rank.ACE\n
     print (rank.value)
     '''
-    TWO = 2
-    THREE = 3
-    FOUR = 4
-    FIVE = 5
-    SIX = 6
-    SEVEN = 7
-    EIGHT = 8
-    NINE = 9
-    TEN = 10
-    JACK = 10
-    QUEEN = 10
-    KING = 10
-    ACE = 11
+
+    TWO = auto()
+    THREE = auto()
+    FOUR = auto()
+    FIVE = auto()
+    SIX = auto()
+    SEVEN = auto()
+    EIGHT = auto()
+    NINE = auto()
+    TEN = auto()
+    JACK = auto()
+    QUEEN = auto()
+    KING = auto()
+    ACE = auto()
+
+    def __str__(self):
+        return self.name
+    
+    def __repr__(self):
+        return str(self)
