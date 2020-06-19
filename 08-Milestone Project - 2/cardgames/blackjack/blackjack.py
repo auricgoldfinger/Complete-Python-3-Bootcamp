@@ -1,9 +1,9 @@
 from game.rank import Rank
 from game.suit import Suit
-from game_utils import Game_Utils
+from blackjack.utils import BlackjackUtils
 
 rank_values = {}
 for rank in Rank:
-    rank_values[rank] = Game_Utils.rankEvaluator(rank)
+    rank_values[rank] = BlackjackUtils.rankEvaluator(rank)
 
 print(rank_values)

@@ -1,6 +1,6 @@
 from game.rank import Rank
 
-class Game_Utils:
+class BlackjackUtils:
 
     @staticmethod
     def rankEvaluator(rank):

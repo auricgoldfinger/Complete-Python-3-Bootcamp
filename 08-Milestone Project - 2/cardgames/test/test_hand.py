@@ -2,13 +2,13 @@ from game.hand import Hand
 from game.card import Card
 from game.rank import Rank
 from game.suit import Suit
-from game_utils import Game_Utils
+from blackjack.utils import BlackjackUtils
 import unittest
 
 class Test_Hand(unittest.TestCase):
 
     def test_simple_hand(self):
-        my_hand = Hand(Game_Utils.calculate_value)
+        my_hand = Hand(BlackjackUtils.calculate_value)
 
         self.assertEqual(0, my_hand.value())
 
@@ -23,7 +23,7 @@ class Test_Hand(unittest.TestCase):
         self.assertEqual(13, my_hand.value())
 
     def Test_Multiple_Aces(self):
-        my_hand = Hand(Game_Utils.calculate_value)
+        my_hand = Hand(BlackjackUtils.calculate_value)
         my_hand.add_card(Card(suit=Suit.HEARTS, rank=Rank.ACE))
         self.assertEqual(11, my_hand.value())
 
