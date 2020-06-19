@@ -25,14 +25,6 @@ def take_bet():
 
 def hit(deck,hand):
     hand.add_card(deck.deal())
-    value = hand.value()
-    print(f"Holding {hand.cards}  ({value})")
-    if value > 21:
-        print("Busted")
-    elif value == 21:
-        print("Won!")
-    else:
-        print("Continue")
 
 def hit_or_stand(deck,hand):
     global playing  # to control an upcoming while loop
@@ -44,6 +36,36 @@ def hit_or_stand(deck,hand):
         else:
             break
 
+def show_some(player):
+    if len(player.hand.cards) > 0:
+        print(f"{player.name} has {player.hand.cards[0]} and {len(player.hand.cards)-1} more")
+    else:
+        print(f"{player.name} has no cards")
+    
+def show_all(player):    
+    if len(player.hand.cards)>0:
+        print(f"{player.name} has {player.hand.cards}, worth {player.hand.value()}")
+    else:
+        print(f"{player.name} has no cards")
+
+def prepare(deck, player):
+    hit(deck,player.hand)
+    hit(deck,player.hand)
+
 take_bet()
+show_some(dealer)
+show_all(human_player)
+
+print("Shuffling...")
 deck.shuffle()
+print("Prepare dealer...")
+prepare(deck,dealer)
+print("Prepare player...")
+prepare(deck,human_player)
+
+show_some(dealer)
+show_all(human_player)
 hit_or_stand(deck, human_player.hand)
+
+show_all(dealer)
+show_all(human_player)
