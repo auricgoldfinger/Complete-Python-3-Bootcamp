@@ -9,7 +9,6 @@ class Card_Test(unittest.TestCase):
         rank = Rank.ACE
         my_card = Card(suit, rank)
         self.assertEqual(str(my_card), 'ACE of HEARTS')
-        self.assertEqual(my_card.value(), 11)
 
 if __name__ == '__main__':
     unittest.main()

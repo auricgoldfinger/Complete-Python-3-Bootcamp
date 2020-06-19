@@ -22,7 +22,7 @@ class Test_Hand(unittest.TestCase):
         # Expect ace to become value 1
         self.assertEqual(13, my_hand.value())
 
-    def Test_Multiple_Aces(self):
+    def test_multiple_aces(self):
         my_hand = Hand(BlackjackUtils.calculate_value)
         my_hand.add_card(Card(suit=Suit.HEARTS, rank=Rank.ACE))
         self.assertEqual(11, my_hand.value())
