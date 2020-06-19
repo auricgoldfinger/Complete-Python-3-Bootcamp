@@ -18,7 +18,7 @@ class BlackjackUtils:
         if len(cards) > 0:
             nrAces = len(list(filter(lambda c:c.rank == Rank.ACE, cards)))
             # first count the number of other cards
-            result = sum(Game_Utils.rankEvaluator(card.rank) for card in list(filter(lambda c:c.rank != Rank.ACE, cards)))
+            result = sum(BlackjackUtils.rankEvaluator(card.rank) for card in list(filter(lambda c:c.rank != Rank.ACE, cards)))
             # If there are multiple aces, only one might have the value of 11. Others always have value 1
             result += max(0, nrAces-1)
             nrAces -= max(0, nrAces-1)
@@ -29,6 +29,6 @@ class BlackjackUtils:
                     # if the sum of all cards + all but one ace is greater than 10, all aces must have value one or we'll go over 21
                     result += nrAces
                 else:
-                   result += Game_Utils.rankEvaluator(Rank.ACE)
+                   result += BlackjackUtils.rankEvaluator(Rank.ACE)
 
         return result
