@@ -52,7 +52,6 @@ def prepare(deck, player):
     hit(deck,player.hand)
     hit(deck,player.hand)
 
-take_bet()
 show_some(dealer)
 show_all(human_player)
 
@@ -65,6 +64,9 @@ prepare(deck,human_player)
 
 show_some(dealer)
 show_all(human_player)
+
+take_bet()
+
 hit_or_stand(deck, human_player.hand)
 
 show_all(dealer)
