@@ -11,3 +11,6 @@ class Hand:
 
     def value(self):
         return self.value_calculator(self.cards)
+    
+    def clear(self):
+        self.cards.clear()
