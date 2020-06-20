@@ -4,6 +4,9 @@ class Chips:
         self.total = 100  # This can be set to a default value or supplied by a user input
         self.bet = 0
         
+    def __len__(self):
+        return self.total
+
     def win_bet(self):
         self.total += self.bet
     
