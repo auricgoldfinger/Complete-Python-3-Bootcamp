@@ -78,8 +78,13 @@ class Blackjack():
         elif player.hand.value() > dealer.hand.value():
             self.handle_win(player)
             return player
+        elif player.hand.value() < dealer.hand.value():
+            self.handle_loss(player)
+            return dealer
         elif player.hand.value() == dealer.hand.value():
             return None
+        else:
+            raise ValueError(f"player value {player.hand.value()}, dealer value {dealer.hand.value()}")
 
     def play(self):
         while True:
