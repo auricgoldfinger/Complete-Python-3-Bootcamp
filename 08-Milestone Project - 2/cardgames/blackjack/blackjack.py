@@ -54,11 +54,9 @@ class Blackjack():
 
     def handle_win(self, player):
         player.chips.win_bet()
-        print(f"\n\t{player.name} wins and has {len(player.chips)} in posession\n")
 
     def handle_loss(self, player):
         player.chips.lose_bet()
-        print(f"\n\t{player.name} looses and has {len(player.chips)} in posession\n")
 
     def evaluate(self, player, dealer):
         '''
@@ -70,14 +68,18 @@ class Blackjack():
         '''
         if self.is_blackjack(player.hand) and not self.is_blackjack(dealer.hand):
             self.handle_win(player)
+            return player
         elif player.hand.value() > 21:
             self.handle_loss(player)
+            return dealer
         elif dealer.hand.value() > 21:
             self.handle_win(player)
+            return player
         elif player.hand.value() > dealer.hand.value():
             self.handle_win(player)
+            return player
         elif player.hand.value() == dealer.hand.value():
-            print(f"It's a push. No change of chips.")
+            return None
 
     def play(self):
         while True:
@@ -141,7 +143,13 @@ class Blackjack():
             self.show_all(human_player)
             
             # Run different winning scenarios
-            self.evaluate(human_player, dealer)
+            winner = self.evaluate(human_player, dealer)
+            if (human_player == winner):
+                print(f"\n\t{human_player.name} wins and has {len(human_player.chips)} in posession\n")
+            elif (dealer == winner):
+                print(f"\n\t{human_player.name} looses and has {len(human_player.chips)} in posession\n")
+            else:
+                print("Push. No change in chips.")
             
             # Inform Player of their chips total 
             
