@@ -46,6 +46,7 @@ class Blackjack():
             print(f"{player.name} has no cards")
 
     def prepare(self, deck, player):
+        player.hand.clear()
         self.hit(deck,player.hand)
         self.hit(deck,player.hand)
 
@@ -87,6 +88,9 @@ class Blackjack():
             raise ValueError(f"player value {player.hand.value()}, dealer value {dealer.hand.value()}")
 
     def play(self):
+        dealer = Player("dealer", BlackjackUtils.calculate_value)
+        human_player = Player("player", BlackjackUtils.calculate_value)
+
         while True:
             # Print an opening statement
 
@@ -97,12 +101,6 @@ class Blackjack():
             print("██████╔╝███████╗██║  ██║╚██████╗██║  ██╗╚█████╔╝██║  ██║╚██████╗██║  ██╗")
             print("╚═════╝ ╚══════╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝ ╚════╝ ╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝")
             print("")
-
-            dealer = Player("dealer", BlackjackUtils.calculate_value)
-            human_player = Player("player", BlackjackUtils.calculate_value)
-
-            self.show_some(dealer)
-            self.show_all(human_player)
             
             # Create & shuffle the deck, deal two cards to each player
             deck = Deck()
@@ -130,8 +128,9 @@ class Blackjack():
                 self.hit_or_stand(deck, human_player.hand)
                 
                 # Show cards (but keep one dealer card hidden)
-                self.show_some(dealer)
-                self.show_all(human_player)
+                if self.playing:
+                    #self.show_some(dealer)
+                    self.show_all(human_player)
                 
                 # If player's hand exceeds 21, run player_busts() and break out of loop
                 if human_player.hand.value() > 21:
