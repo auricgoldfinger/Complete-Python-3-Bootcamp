@@ -28,7 +28,7 @@ class Blackjack():
     def hit_or_stand(self, deck,hand):
 
         next_step = input("Hit or stand? ")
-        if "hit" == next_step.lower():
+        if "h" == next_step[0].lower():
             self.hit(deck, hand)
         else:
             self.playing = False
